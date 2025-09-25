@@ -89,19 +89,20 @@ export default function CategoriesPage() {
   );
 }
 
-function emojiForCategory(name: string): string {
-  const n = name.trim();
-  if (includesAny(n, ["อาหาร", "ของกิน", "ขนม"])) return "🍜";
-  if (includesAny(n, ["เครื่องดื่ม", "ดื่ม"])) return "🥤";
-  if (includesAny(n, ["สัตว์"])) return "🐶";
-  if (includesAny(n, ["เดินทาง", "ท่องเที่ยว"])) return "✈️";
-  if (includesAny(n, ["ในบ้าน", "ของในบ้าน", "ครัวเรือน"])) return "🏠";
-  if (includesAny(n, ["บันเทิง", "ดนตรี", "ภาพยนตร์", "หนัง"])) return "🎬";
-  if (includesAny(n, ["สถานที่"])) return "📍";
-  if (includesAny(n, ["สุขภาพ"])) return "❤️";
-  if (includesAny(n, ["ชีวิตประจำวัน", "วัฒนธรรม"])) return "🎎";
-  return "🧩";
-}
+// function emojiForCategory(name: string): string {
+//   const n = name.trim();
+//   if (includesAny(n, ["อาหาร", "ของกิน", "ขนม"])) return "🍜";
+//   if (includesAny(n, ["เครื่องดื่ม", "ดื่ม"])) return "🥤";
+//   if (includesAny(n, ["สัตว์"])) return "🐶";
+//   if (includesAny(n, ["เดินทาง", "ท่องเที่ยว"])) return "✈️";
+//   if (includesAny(n, ["ในบ้าน", "ของในบ้าน", "ครัวเรือน"])) return "🏠";
+//   if (includesAny(n, ["บันเทิง", "ดนตรี", "ภาพยนตร์", "หนัง"])) return "🎬";
+//   if (includesAny(n, ["สถานที่"])) return "📍";
+//   if (includesAny(n, ["สุขภาพ"])) return "❤️";
+//   if (includesAny(n, ["ชีวิตประจำวัน", "วัฒนธรรม"])) return "🎎";
+//   return "🧩";
+// }
+
 function includesAny(text: string, keys: string[]) {
   return keys.some((k) => text.includes(k));
 }

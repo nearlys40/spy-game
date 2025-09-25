@@ -29,6 +29,7 @@ export async function loadWordPack(): Promise<{ pairs: WordPair[] }> {
       }));
     if (pairs.length === 0) throw new Error("No enabled pairs");
     return { pairs };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     // Fallback minimal
     return {
