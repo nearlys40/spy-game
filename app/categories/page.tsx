@@ -103,6 +103,6 @@ export default function CategoriesPage() {
 //   return "🧩";
 // }
 
-function includesAny(text: string, keys: string[]) {
-  return keys.some((k) => text.includes(k));
-}
+// function includesAny(text: string, keys: string[]) {
+//   return keys.some((k) => text.includes(k));
+// }
