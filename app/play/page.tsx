@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
   assignWords,
@@ -11,6 +11,14 @@ import { loadWordPack } from "@/lib/words";
 import clsx from "clsx";
 
 export default function PlayPage() {
+  return (
+    <Suspense fallback={<FullScreenFallback text="กำลังเตรียมคำ…" />}>
+      <PlayInner />
+    </Suspense>
+  );
+}
+
+function PlayInner() {
   const sp = useSearchParams();
   const router = useRouter();
   const n = Math.max(3, Math.min(12, Number(sp.get("n") || 6)));
@@ -66,13 +74,7 @@ export default function PlayPage() {
     setCensored(true);
   }
 
-  if (!assignments) {
-    return (
-      <main className="min-h-[100dvh] flex items-center justify-center p-6">
-        กำลังเตรียมคำ…
-      </main>
-    );
-  }
+  if (!assignments) return <FullScreenFallback text="กำลังเตรียมคำ…" />;
 
   const progress = Math.max(0, Math.min(100, Math.round((current / n) * 100)));
 
@@ -176,4 +178,12 @@ function emojiForCategory(name: string): string {
   if (n.includes("สุขภาพ")) return "❤️";
   if (n.includes("ชีวิตประจำวัน") || n.includes("วัฒนธรรม")) return "🎎";
   return "🧩";
+}
+
+function FullScreenFallback({ text }: { text: string }) {
+  return (
+    <main className="min-h-[100dvh] flex items-center justify-center p-6">
+      {text}
+    </main>
+  );
 }

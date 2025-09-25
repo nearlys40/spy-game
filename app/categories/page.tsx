@@ -1,12 +1,20 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { loadWordPack } from "@/lib/words";
 import type { WordPair } from "@/lib/assign";
 
+export default function CategoriesPage() {
+  return (
+    <Suspense fallback={<FullScreenFallback text="กำลังโหลดหมวดหมู่…" />}>
+      <CategoriesInner />
+    </Suspense>
+  );
+}
+
 type CatInfo = { name: string; count: number };
 
-export default function CategoriesPage() {
+function CategoriesInner() {
   const router = useRouter();
   const sp = useSearchParams();
   const n = Math.max(3, Math.min(12, Number(sp.get("n") || 6)));
@@ -36,11 +44,7 @@ export default function CategoriesPage() {
   }
 
   if (loading) {
-    return (
-      <main className="min-h-[100dvh] flex items-center justify-center p-6">
-        กำลังโหลดหมวดหมู่…
-      </main>
-    );
+    return <FullScreenFallback text="กำลังโหลดหมวดหมู่…" />;
   }
 
   return (
@@ -89,20 +93,10 @@ export default function CategoriesPage() {
   );
 }
 
-// function emojiForCategory(name: string): string {
-//   const n = name.trim();
-//   if (includesAny(n, ["อาหาร", "ของกิน", "ขนม"])) return "🍜";
-//   if (includesAny(n, ["เครื่องดื่ม", "ดื่ม"])) return "🥤";
-//   if (includesAny(n, ["สัตว์"])) return "🐶";
-//   if (includesAny(n, ["เดินทาง", "ท่องเที่ยว"])) return "✈️";
-//   if (includesAny(n, ["ในบ้าน", "ของในบ้าน", "ครัวเรือน"])) return "🏠";
-//   if (includesAny(n, ["บันเทิง", "ดนตรี", "ภาพยนตร์", "หนัง"])) return "🎬";
-//   if (includesAny(n, ["สถานที่"])) return "📍";
-//   if (includesAny(n, ["สุขภาพ"])) return "❤️";
-//   if (includesAny(n, ["ชีวิตประจำวัน", "วัฒนธรรม"])) return "🎎";
-//   return "🧩";
-// }
-
-// function includesAny(text: string, keys: string[]) {
-//   return keys.some((k) => text.includes(k));
-// }
+function FullScreenFallback({ text }: { text: string }) {
+  return (
+    <main className="min-h-[100dvh] flex items-center justify-center p-6">
+      {text}
+    </main>
+  );
+}

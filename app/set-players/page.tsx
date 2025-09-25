@@ -1,12 +1,20 @@
 "use client";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+
+export default function SetPlayersPage() {
+  return (
+    <Suspense fallback={<FullScreenFallback text="กำลังโหลด..." />}>
+      <SetPlayersInner />
+    </Suspense>
+  );
+}
 
 const MIN = 3;
 const MAX = 10;
 const QUICK = [3, 4, 5, 6, 7, 8, 9, 10];
 
-export default function SetPlayersPage() {
+function SetPlayersInner() {
   const router = useRouter();
   const sp = useSearchParams();
   const pref = Number(sp.get("pref") || 6);
@@ -103,6 +111,14 @@ export default function SetPlayersPage() {
           </button>
         </section>
       </div>
+    </main>
+  );
+}
+
+function FullScreenFallback({ text }: { text: string }) {
+  return (
+    <main className="min-h-[100dvh] flex items-center justify-center p-6">
+      {text}
     </main>
   );
 }
