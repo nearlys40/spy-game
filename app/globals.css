@@ -1,26 +1,134 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* โทนสี: น้ำเงินกรมท่า (หลัก), เขียว (ยืนยัน), แดง (ปิดตา) */
+  --bg: #f9fbff; /* พื้นหลังอ่อน สบายตา */
+  --text: #0f172a; /* เทาเข้ม/กรม อ่านง่าย */
+  --muted: #475569; /* คำอธิบาย */
+  --primary: #1647b7; /* น้ำเงินกรมท่า */
+  --primary-600: #1240a6;
+  --primary-300: #90a7ea;
+  --success: #2e7d32; /* เขียว */
+  --success-700: #27692b;
+  --danger: #c62828; /* แดง */
+  --border: #d1d5db; /* เส้นขอบ */
+  --card: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: #0b1220;
+    --text: #f1f5f9;
+    --muted: #cbd5e1;
+    --primary: #8fb0ff;
+    --primary-600: #7ca0f0;
+    --primary-300: #cfe0ff;
+    --success: #8bd59a;
+    --success-700: #6bbd7c;
+    --danger: #ff6b6b;
+    --border: #334155;
+    --card: #121a2a;
   }
 }
 
+/* ===== Base ===== */
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-size: 18px; /* ฐานอ่านสบาย */
+  line-height: 1.6;
+}
+
+/* ลด motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===== Utilities เพิ่มเติม ===== */
+.blurred {
+  filter: blur(10px);
+}
+
+/* Focus ที่เห็นชัดสำหรับจอสัมผัส */
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 3px solid var(--primary-300);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+/* ===== Components ===== */
+@layer components {
+  .container-safe {
+    @apply w-full max-w-md mx-auto px-4;
+  }
+
+  .heading {
+    @apply text-2xl font-bold mb-4 text-center;
+  }
+
+  .subtext {
+    color: var(--muted);
+    @apply text-base text-center;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    @apply rounded-2xl p-6 shadow-sm;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-xl px-5 py-4 text-lg font-medium transition;
+    min-height: 56px; /* touch target */
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--primary-600);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-danger {
+    background: var(--danger);
+    color: #fff;
+  }
+  .btn-success {
+    background: var(--success);
+    color: #fff;
+  }
+
+  .input {
+    @apply w-full rounded-xl border p-4 text-xl;
+    border-color: var(--border);
+  }
+
+  .label {
+    @apply block mb-2 font-medium;
+  }
+
+  .word-box {
+    @apply text-center font-bold select-none flex items-center justify-center;
+    font-size: 32px; /* ใหญ่ชัด */
+    min-height: 3rem; /* คงที่ ไม่กระโดด */
+  }
+
+  .progress-wrap {
+    @apply w-full h-3 rounded-full bg-gray-200 overflow-hidden mb-4;
+  }
+  .progress-bar {
+    @apply h-full bg-blue-600;
+    background: var(--primary);
+  }
 }
